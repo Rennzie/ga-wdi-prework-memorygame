@@ -23,12 +23,24 @@ var cards = [
 
 var cardsInPlay = [];
 
-flipCard =(cardId)=>{
+var flipCard = function(){
+    var cardId = this.getAttribute('data-id');
     cardsInPlay.push(cards[cardId].rank);
-    console.log("User flipped " + cards[cardId].rank);
-    console.log("The suit is: " + cards[cardId].suit);
-    console.log("The url is: " + cards[cardId].cardImage);
+    this.setAttribute('src', cards[cardId].cardImage)
+
     checkForMatch();
+}
+
+var createBoard = function(){
+    for(i = 0; i < cards.length; i++){
+        var cardElement = document.createElement('img');
+
+        cardElement.setAttribute ('src', 'images/back.png');
+        cardElement.setAttribute ('data-id', i);
+        cardElement.addEventListener('click', flipCard);
+
+        document.getElementById('game-board').appendChild(cardElement);
+    }
 }
 
 checkForMatch = () => {
@@ -41,5 +53,4 @@ checkForMatch = () => {
     }
 }
 
-flipCard(0);
-flipCard(1);
+createBoard();
